@@ -124,6 +124,7 @@ jobs:
         run: |
           cd deploy-repo
           git switch --force-create ${{ github.ref_name }}
+          git config --global --add --bool push.autoSetupRemote true
 
       - name: Clean deploy git directory
         # clean the content of the checked out deploy folder, except its .git folder
