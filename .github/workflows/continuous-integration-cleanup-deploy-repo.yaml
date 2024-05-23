@@ -1,0 +1,30 @@
+name: Continuous Integration cleanup deploy repo
+
+on:
+  delete:
+    # when a branch was deleted
+    branches:
+      - '**'
+
+jobs:
+  # when a branch is deleted / merged,
+  # remove the shadow branch with dist content from the deploy branch
+  delete-hlx-branch:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout deploy repository
+        uses: actions/checkout@v4
+        with:
+          repository: some-user/eds-deploy
+          path: deploy-repo
+          token: ${{secrets.DEPLOY_REPO_PUSH_TOKEN}}
+
+      - name: Remove branch
+        run: |
+          cd deploy-repo
+          git config --local user.name "EDS CI/CD"
+          git config --local user.email "eds-ci@diva-e.com"
+          git fetch --all --prune
+          git push origin --delete ${{ github.event.ref }} --force
