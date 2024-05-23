@@ -40,7 +40,7 @@ const template = ({ message }: HelloWorldArgs): TemplateResult => {
     <div class="hello-world">
       <h1>Hello, World!</h1>
       <p>Welcome to your first EDS Block. ${renderIcon('rocket-lunch')}</p>
-      <p class="message">This message comes from your block: ${message}</p>
+      <p class="message">This message comes from your block: <br> ${message}</p>
     </div>
   </div>`;
 };
